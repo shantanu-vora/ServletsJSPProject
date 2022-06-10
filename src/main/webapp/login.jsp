@@ -25,7 +25,7 @@
     </header>
 
     <section id="form-body">
-      <form action="admin/contactus/requests" method="post">
+      <form action="login" method="post">
         <div class="form-group">
           <label for="userName">Username</label>
           <input id="userName" class="form-control" type="text" name="userName" placeholder="john_smith123" required>
