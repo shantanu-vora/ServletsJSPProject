@@ -25,7 +25,7 @@
     </header>
 
     <section id="form-body">
-      <form action="submit" method="post">
+      <form action="contactus" method="post">
         <div class="form-group">
           <label for="fullName">Full Name</label>
           <input id="fullName" class="form-control" type="text" name="fullName" placeholder="John Smith" required>
