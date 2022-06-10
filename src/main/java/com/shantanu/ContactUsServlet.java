@@ -33,7 +33,7 @@ public class ContactUsServlet extends HttpServlet {
 		
 		Request req = new Request(fullName, email, message); 
 		
-		RequestDAO requestDao = new RequestDAO();
+		RequestDao requestDao = new RequestDao();
 		
 		try {
 			requestDao.insertRequest(req);
