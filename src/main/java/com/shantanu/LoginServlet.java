@@ -1,6 +1,7 @@
 package com.shantanu;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +24,30 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		
+		String username = request.getParameter("userName");
+		String password = request.getParameter("password");
+		
+		User user = new User(username, password);
+		
+		UserDao userDao = new UserDao();
+		
+		try {
+			if(userDao.isValidUsername(user)) {
+				if(userDao.isValidPassword(user)) {
+					response.sendRedirect("dashboard");
+				} else {
+					out.println("The password is incorrect");
+				}	
+			} else {
+				out.println("This username does not exist");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
