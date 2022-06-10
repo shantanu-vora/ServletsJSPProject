@@ -28,17 +28,17 @@
       <form action="submit" method="post">
         <div class="form-group">
           <label for="fullName">Full Name</label>
-          <input id="fullName" class="form-control" type="text" name="fullName" placeholder="John Smith">
+          <input id="fullName" class="form-control" type="text" name="fullName" placeholder="John Smith" required>
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input id="email" class="form-control" type="text" name="email" placeholder="example@abc.com">
+          <input id="email" class="form-control" type="email" name="email" placeholder="example@abc.com" required>
         </div>
 
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea name="message" id="message" class="form-control" rows="500"></textarea>
+          <textarea name="message" id="message" class="form-control" rows="500" required></textarea>
         </div>
 
         <button type="submit" class="btn">Submit</button>
