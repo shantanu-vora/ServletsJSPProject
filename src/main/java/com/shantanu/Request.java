@@ -60,17 +60,5 @@ public class Request {
 	public void setRequestStatus(String requestStatus) {
 		this.requestStatus = requestStatus;
 	}
-
-
-
-
-
-//	@Override
-//	public String toString() {
-//		return "Request [fullName=" + fullName + ", email=" + email + ", message=" + message + ", requestStatus="
-//				+ requestStatus + "]";
-//	}
-
-	
-	
+		
 }
