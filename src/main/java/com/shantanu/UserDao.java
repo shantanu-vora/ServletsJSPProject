@@ -10,22 +10,22 @@ public class UserDao {
 	
 	private String selectQuery = "select * from users where username = ?";
 	
-	private Connection getConnection() {
+	private Connection getConnection() throws ClassNotFoundException {
 		
 		Connection connection = null;
-		
+
 		try {
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(url, username, password);
-		} catch(Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return connection;
 	}
 	
 	
-	public boolean isValidUsername(User user) throws SQLException {
+	public boolean isValidUsername(User user) throws SQLException, ClassNotFoundException {
 		Connection connection = null;
 		boolean isValid = true;
 		try {
@@ -36,17 +36,20 @@ public class UserDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 		
 			isValid = resultSet.next();
-		} catch(Exception e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
+		} finally {
+			connection.close();
 		}
 		
 		return isValid;
 	}
 	
 	
-	public boolean isValidPassword(User user) throws SQLException {
+	public boolean isValidPassword(User user) throws SQLException, ClassNotFoundException {
 		Connection connection = null;
 		boolean isValid = true;
+		
 		try {
 			Class.forName("org.postgresql.Driver");
 			connection = getConnection();
@@ -56,9 +59,11 @@ public class UserDao {
 			resultSet.next();
 			isValid = resultSet.getString("password").equals(user.getPassword());
 				
-		} catch(Exception e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			connection.close();
+		}
 		
 		return isValid;
 	}
