@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 @WebServlet("/contactus")
 public class ContactUsServlet extends HttpServlet {
 	
@@ -38,6 +39,7 @@ public class ContactUsServlet extends HttpServlet {
 		try {
 			requestDao.insertRequest(req);
 			out.println("Your request has been submitted");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
