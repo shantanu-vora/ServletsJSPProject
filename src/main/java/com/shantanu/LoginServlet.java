@@ -19,21 +19,15 @@ public class LoginServlet extends HttpServlet {
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
 		requestDispatcher.forward(request, response);
-		
-//		response.sendRedirect("login.jsp");
-		
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PrintWriter out = response.getWriter();
-		
 		String username = request.getParameter("userName");
 		String password = request.getParameter("password");
 		
 		User user = new User(username, password);
-		
 		UserDao userDao = new UserDao();
 		
 		try {
@@ -43,19 +37,14 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("username", username);
 					response.sendRedirect("dashboard");
 				} else {
-					out.println("The password is incorrect");
+					response.sendRedirect("login");
 				}	
 			} else {
-				out.println("This username does not exist");
+				response.sendRedirect("login");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
-	
-	
-	
-	
-
 }

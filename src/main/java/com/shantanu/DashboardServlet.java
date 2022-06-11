@@ -1,10 +1,8 @@
 package com.shantanu;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +44,7 @@ public class DashboardServlet extends HttpServlet {
 		try {
 			requestDao.updateRequestStatus(req);
 			doGet(request, response);
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

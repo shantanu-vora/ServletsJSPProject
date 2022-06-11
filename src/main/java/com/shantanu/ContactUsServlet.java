@@ -40,7 +40,7 @@ public class ContactUsServlet extends HttpServlet {
 			requestDao.insertRequest(req);
 			out.println("Your request has been submitted");
 			
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		

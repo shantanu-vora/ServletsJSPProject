@@ -12,8 +12,8 @@ public class RequestDao {
 	
 	private String insertQuery = "insert into request_info (fullname, email, text_message) values (?, ?, ?)";
 	private String selectQuery = "select * from request_info order by id";
-	private String selectQueryById = "select request_status from request_info where id = ?";
-	private String updateQuery = "update request_info set request_status = ? where id = ?"; 
+	private String selectQueryById = "select is_active from request_info where id = ?";
+	private String updateQuery = "update request_info set is_active = ? where id = ?"; 
 	
 	
 	private Connection getConnection() {
@@ -30,27 +30,27 @@ public class RequestDao {
 		return connection;
 	}
 	
-	public void insertRequest(Request request) throws SQLException {
+	public void insertRequest(Request request) throws SQLException, ClassNotFoundException {
 		Connection connection = null;
-		try {
+		try {			
 			Class.forName("org.postgresql.Driver");
 			connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 			
+			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 			preparedStatement.setString(1, request.getFullName());
 			preparedStatement.setString(2, request.getEmail());
 			preparedStatement.setString(3, request.getMessage());
 			
 			preparedStatement.executeUpdate();
 			
-		} catch(Exception e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
 			connection.close();
 		}
 	}
 	
-	public List fetchRequest() throws SQLException {
+	public List<Request> fetchRequest() throws SQLException {
 		Connection connection = null;
 		ResultSet resultSet = null;
 		List<Request> requests = new ArrayList<>();
@@ -66,10 +66,9 @@ public class RequestDao {
 				String fullName = resultSet.getString("fullname");
 				String email = resultSet.getString("email");
 				String message = resultSet.getString("text_message");
-				String requestStatus = resultSet.getString("request_status");
+				boolean isActive = resultSet.getBoolean("is_active");
 			
-				Request req = new Request(id, fullName, email, message, requestStatus);
-				
+				Request req = new Request(id, fullName, email, message, isActive);
 				requests.add(req);
 			}	
 		} catch(Exception e) {
@@ -81,7 +80,7 @@ public class RequestDao {
 		return requests;
 	}
 	
-	public void updateRequestStatus(Request request) throws SQLException {
+	public void updateRequestStatus(Request request) throws SQLException, ClassNotFoundException {
 		
 		Connection connection = null;
 		
@@ -93,19 +92,20 @@ public class RequestDao {
 			ResultSet resultSet = preparedSelectStatement.executeQuery();
 			resultSet.next();
 			
-			String requestStatus = resultSet.getString("request_status");
+			boolean isActive = resultSet.getBoolean("is_active");
 			PreparedStatement preparedUpdateStatement = connection.prepareStatement(updateQuery);
 			
-			if(requestStatus.equals("active")) {
-				preparedUpdateStatement.setString(1, "Archive");
+			if(isActive) {
+				preparedUpdateStatement.setBoolean(1, false);
 				preparedUpdateStatement.setInt(2, request.getId());	
 			} else {
-				preparedUpdateStatement.setString(1, "active");
+				preparedUpdateStatement.setBoolean(1, true);
 				preparedUpdateStatement.setInt(2, request.getId());
 			}
+			
 			preparedUpdateStatement.executeUpdate();
 			
-		} catch(Exception e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
 			connection.close();

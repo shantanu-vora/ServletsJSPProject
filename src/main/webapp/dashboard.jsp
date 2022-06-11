@@ -44,7 +44,7 @@
 			<% 				
 				List<Request> requestList = (List<Request>) request.getAttribute("requestList");
 				for(Request req: requestList) {
-					if(req.getRequestStatus().equals("Archive")) {
+					if(!req.isActive()) {
 			%>
 			
 			<tr>
@@ -52,7 +52,7 @@
 				<td><%= req.getFullName() %></td>
 				<td><%= req.getEmail() %></td>
 				<td><%= req.getMessage() %></td>
-				<td><%= req.getRequestStatus() %></td>
+				<td><%= req.isActive() %></td>
 				<td>
 					<form action="dashboard" method="post">
 						<button type="submit" value="<%= req.getId() %>" name="reqId">Active</button>
@@ -85,7 +85,7 @@
 		<tbody>
 			<%
 				for(Request req: requestList) {
-					if(req.getRequestStatus().equals("active")) {
+					if(req.isActive()) {
 			%>
 			
 			<tr>
@@ -93,7 +93,7 @@
 				<td><%= req.getFullName() %></td>
 				<td><%= req.getEmail() %></td>
 				<td><%= req.getMessage() %></td>
-				<td><%= req.getRequestStatus() %></td>
+				<td><%= req.isActive() %></td>
 				<td>
 					<form action="dashboard" method="post">
 						<button type="submit" value="<%= req.getId() %>" name="reqId">Archive</button>
