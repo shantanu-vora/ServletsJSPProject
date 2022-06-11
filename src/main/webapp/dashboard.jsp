@@ -11,6 +11,21 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<% 
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		
+		response.setHeader("Pragma", "no-cache");
+	
+		if(session.getAttribute("username") == null) {
+			response.sendRedirect("login");
+		}
+	%>
+
+	
+	<form action="logout" method="post" align="right">
+		<input type="submit" value="Logout">
+	</form>
 	
 	<h1>Archived Requests</h1>
 	<table border="1" cellspacing="0" cellpadding="5" align="center">
@@ -26,7 +41,7 @@
 		</thead>
 		
 		<tbody>
-			<%
+			<% 				
 				List<Request> requestList = (List<Request>) request.getAttribute("requestList");
 				for(Request req: requestList) {
 					if(req.getRequestStatus().equals("Archive")) {

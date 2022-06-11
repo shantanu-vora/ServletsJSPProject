@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/login")
@@ -38,6 +39,8 @@ public class LoginServlet extends HttpServlet {
 		try {
 			if(userDao.isValidUsername(user)) {
 				if(userDao.isValidPassword(user)) {
+					HttpSession session = request.getSession();
+					session.setAttribute("username", username);
 					response.sendRedirect("dashboard");
 				} else {
 					out.println("The password is incorrect");

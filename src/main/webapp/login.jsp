@@ -17,6 +17,11 @@
 </head>
 
 <body>
+
+	<% 
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");	
+	%>
   <main>
     <header>
       <div id="form-head">
