@@ -13,7 +13,7 @@ public class RequestDao {
 	private String insertQuery = "insert into request_info (fullname, email, text_message) values (?, ?, ?)";
 	private String selectQuery = "select * from request_info order by id";
 	private String selectQueryById = "select request_status from request_info where id = ?";
-	private String updateQuery = "update request_info set request_status = ? where id = ?";
+	private String updateQuery = "update request_info set request_status = ? where id = ?"; 
 	
 	
 	private Connection getConnection() {
@@ -23,7 +23,7 @@ public class RequestDao {
 		try {
 			connection = DriverManager.getConnection(url, username, password);
 			
-		} catch(Exception e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
